@@ -68,7 +68,7 @@ export interface VirtualListViewProps<ItemInfo extends VirtualListViewItemInfo> 
     itemList: ItemInfo[];
 
     // Callback for rendering item when it becomes visible within view port.
-    renderItem: (item: ItemInfo, hasFocus?: boolean) => JSX.Element | JSX.Element[];
+    renderItem: (item: ItemInfo, hasFocus?: boolean, itemIndex?: number) => JSX.Element | JSX.Element[];
 
     // Optional padding around the scrolling content within the list.
     padding?: number;
@@ -1108,6 +1108,7 @@ export class VirtualListView<ItemInfo extends VirtualListViewItemInfo>
                     shouldUpdate={ !this.props.skipRenderIfItemUnchanged || cell.cellInfo.shouldUpdate }
                     showOverflow={ this.props.showOverflow }
                     isScreenReaderModeEnabled={ this._isAndroidScreenReaderEnabled() }
+                    itemIndex={ cell.itemIndex }
                     renderItem={ this.props.renderItem }
                 />
             );

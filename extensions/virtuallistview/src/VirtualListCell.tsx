@@ -19,7 +19,7 @@ export interface VirtualListCellProps extends RX.CommonProps {
     onLayout: (itemKey: string, height: number) => void;
     onAnimateStartStop?: (itemKey: string, start: boolean) => void;
     onCellFocus?: (itemKey: string) => void;
-    renderItem: (item: VirtualListCellInfo, focused: boolean) => JSX.Element | JSX.Element[];
+    renderItem: (item: VirtualListCellInfo, focused: boolean, itemIndex: number) => JSX.Element | JSX.Element[];
 
     // Props that do not impact render (position is set by animated style).
     itemKey: string;
@@ -39,6 +39,7 @@ export interface VirtualListCellProps extends RX.CommonProps {
     tabIndex?: number;
     shouldUpdate: boolean;
     item: VirtualListCellInfo;
+    itemIndex: number;
 }
 
 interface StaticRendererProps extends RX.CommonProps {
@@ -47,7 +48,8 @@ interface StaticRendererProps extends RX.CommonProps {
     showOverflow: boolean;
     item: VirtualListCellInfo;
     isFocused: boolean;
-    renderItem: (item: VirtualListCellInfo, focused: boolean) => JSX.Element | JSX.Element[];
+    itemIndex: number;
+    renderItem: (item: VirtualListCellInfo, focused: boolean, itemIndex: number) => JSX.Element | JSX.Element[];
 }
 
 const _styles = {
@@ -82,7 +84,7 @@ export class VirtualListCell extends RX.Component<VirtualListCellProps, null> {
             // we have to wrap results of this.props.render() into the View.
             return (
                 <RX.Animated.View style={ [_styles.overflowVisible, this.props.animatedStyle] } >
-                    { this.props.renderItem(this.props.item, this.props.isFocused) }
+                    { this.props.renderItem(this.props.item, this.props.isFocused, this.props.itemIndex) }
                 </RX.Animated.View>
             );
         }
@@ -325,7 +327,8 @@ export class VirtualListCell extends RX.Component<VirtualListCellProps, null> {
                     shouldUpdate={ this.props.shouldUpdate }
                     showOverflow={ this.props.showOverflow }
                     item={ this.props.item }
-                    isFocused= { this.props.isFocused }
+                    isFocused={ this.props.isFocused }
+                    itemIndex={ this.props.itemIndex }
                     renderItem={ this.props.renderItem }
                 />
             </RX.Animated.View>

@@ -86,7 +86,7 @@ class FruitListView extends RX.Component<null, FruitListState> {
         );
     }
 
-    private _renderItem(item: FruitListItemInfo, hasFocus?: boolean) {
+    private _renderItem(item: FruitListItemInfo, hasFocus?: boolean, itemIndex?: number) {
         const viewStyle = RX.Styles.createViewStyle({
             height: item.height,
             backgroundColor: item.template === _headerItemTemplate ?
@@ -143,7 +143,7 @@ interface VirtualListViewItemInfo {
     itemList: VirtualListViewItemInfo[];
 
     // Callback for rendering item when it becomes visible within view port.
-    renderItem: (item: VirtualListViewItemInfo, hasFocus?: boolean) =>
+    renderItem: (item: VirtualListViewItemInfo, hasFocus?: boolean, itemIndex?: number) =>
         JSX.Element | JSX.Element[];
 
     // Optional padding around the scrolling content within the list.
